@@ -1,19 +1,24 @@
 <html>
 <head>
-	<title>R$ 3.000</title>
+	<title>R$ -,--</title>
+	<link rel="shortcut icon" href="http://icons.iconarchive.com/icons/froyoshark/enkel/512/Bitcoin-icon.png">
 	<style type="text/css">
 		body {
-			background-color: gray;
+			background-color: #222;
 			color: white;
 			text-align: center;
 		}
+		span {
+			color: #666;
+		}
 	</style>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 </head>
 <body>
-	<h1>Last order: R$ 3.000,00 <small>Vol: 300.02 (24h)</small></h1>
-	<h2>Buy: R$ 2.900,00 (0.123) <small>(Lower: R$ 2.800,00)</small></h2>
-	<h2>Sell: R$ 3.000,00 (0.123) <small>(Higher: R$ 3.100,00)</small></h2>
-	<h3>Profit: R$ 100,00</h3>
+	<h1>Last order: R$ <span id="last_order">-,--</span> <small>Vol: <span id="volume">-.--</span> (24h)</small></h1>
+	<h2>Buy: R$ <span id="buy_amount">-,--</span> (<span id="buy_quantity">-.--</span>) <small>(Lower: R$ <span id="lower_order">-,--</span>)</small></h2>
+	<h2>Sell: R$ <span id="sell_amount">-,--</span> (<span id="sell_quantity">-.--</span>) <small>(Higher: R$ <span id="higher_order">-,--</span>)</small></h2>
+	<h3>Profit: R$ <span id="profit">-,--</span></h3>
 	<script type="text/javascript">
 		function notifyMe() {
 			if (Notification.permission !== "granted")
@@ -21,13 +26,35 @@
 			else {
 				var notification = new Notification('bitcointoyou', {
 					icon: 'http://icons.iconarchive.com/icons/froyoshark/enkel/512/Bitcoin-icon.png',
-					body: "BTC bought for R$ 3.000,00!",
+					body: "BTC bought for R$ " + $( "#buy_quantity" ),
+				});
+				notification.onclick = function () {
+					window.open("https://broker.bitcointoyou.com/LimitOrder/Create");
+				};
+				var notification = new Notification('bitcointoyou', {
+					icon: 'http://icons.iconarchive.com/icons/froyoshark/enkel/512/Bitcoin-icon.png',
+					body: "BTC sold for R$ " + $( "#sell_quantity" ),
 				});
 				notification.onclick = function () {
 					window.open("https://broker.bitcointoyou.com/LimitOrder/Create");
 				};
 			}
 		}
+		function round(value, precision) {
+			var power = Math.pow(10, precision || 0);
+			return String(Math.round(value * power) / power);
+		}
+		$.getJSON( "https://www.bitcointoyou.com/api/ticker.aspx", function( data ) {
+			$( "#last_order" ).html( data.ticker.last );
+			$( "#volume" ).html( round(data.ticker.vol, 2) );
+			$( "#buy_amount" ).html( round(data.ticker.buy, 2) );
+			$( "#buy_quantity" ).html( round(data.ticker.buyQty, 2) );
+			$( "#sell_amount" ).html( round(data.ticker.sell, 2) );
+			$( "#sell_quantity" ).html( round(data.ticker.sellQty, 2) );
+			$( "#lower_order" ).html( data.ticker.low );
+			$( "#higher_order" ).html( data.ticker.high );
+			$( "#profit" ).html( round(data.ticker.sell - data.ticker.buy, 2) );
+		});
 	</script>
 	<button onclick="notifyMe()">Notify me!</button>
 </body>
