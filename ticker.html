@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>R$ -,--</title>
+	<title>⬇ R$ -,--</title>
 	<link rel="shortcut icon" href="http://icons.iconarchive.com/icons/froyoshark/enkel/512/Bitcoin-icon.png">
 	<style type="text/css">
 		body {
@@ -26,14 +26,14 @@
 			else {
 				var notification = new Notification('bitcointoyou', {
 					icon: 'http://icons.iconarchive.com/icons/froyoshark/enkel/512/Bitcoin-icon.png',
-					body: "BTC bought for R$ " + $( "#buy_quantity" ),
+					body: "BTC bought for R$ " + $( "#buy_quantity" ).text(),
 				});
 				notification.onclick = function () {
 					window.open("https://broker.bitcointoyou.com/LimitOrder/Create");
 				};
 				var notification = new Notification('bitcointoyou', {
 					icon: 'http://icons.iconarchive.com/icons/froyoshark/enkel/512/Bitcoin-icon.png',
-					body: "BTC sold for R$ " + $( "#sell_quantity" ),
+					body: "BTC sold for R$ " + $( "#sell_quantity" ).text(),
 				});
 				notification.onclick = function () {
 					window.open("https://broker.bitcointoyou.com/LimitOrder/Create");
@@ -54,6 +54,7 @@
 			$( "#lower_order" ).html( data.ticker.low );
 			$( "#higher_order" ).html( data.ticker.high );
 			$( "#profit" ).html( round(data.ticker.sell - data.ticker.buy, 2) );
+			$( "title" ).html( " ↓ " + $( "#buy_amount" ).text() + " ↑ " + $( "#sell_amount" ).text() );
 		});
 	</script>
 	<button onclick="notifyMe()">Notify me!</button>
