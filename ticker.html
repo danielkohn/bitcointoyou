@@ -1,0 +1,34 @@
+<html>
+<head>
+	<title>R$ 3.000</title>
+	<style type="text/css">
+		body {
+			background-color: gray;
+			color: white;
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+	<h1>Last order: R$ 3.000,00 <small>Vol: 300.02 (24h)</small></h1>
+	<h2>Buy: R$ 2.900,00 (0.123) <small>(Lower: R$ 2.800,00)</small></h2>
+	<h2>Sell: R$ 3.000,00 (0.123) <small>(Higher: R$ 3.100,00)</small></h2>
+	<h3>Profit: R$ 100,00</h3>
+	<script type="text/javascript">
+		function notifyMe() {
+			if (Notification.permission !== "granted")
+				Notification.requestPermission();
+			else {
+				var notification = new Notification('bitcointoyou', {
+					icon: 'http://icons.iconarchive.com/icons/froyoshark/enkel/512/Bitcoin-icon.png',
+					body: "BTC bought for R$ 3.000,00!",
+				});
+				notification.onclick = function () {
+					window.open("https://broker.bitcointoyou.com/LimitOrder/Create");
+				};
+			}
+		}
+	</script>
+	<button onclick="notifyMe()">Notify me!</button>
+</body>
+</html>
