@@ -26,14 +26,14 @@
 			else {
 				var notification = new Notification('bitcointoyou', {
 					icon: 'http://icons.iconarchive.com/icons/froyoshark/enkel/512/Bitcoin-icon.png',
-					body: "BTC bought for R$ " + $( "#buy_quantity" ).text(),
+					body: "BTC bought for R$ " + $( "#buy_amount" ).text(),
 				});
 				notification.onclick = function () {
 					window.open("https://broker.bitcointoyou.com/LimitOrder/Create");
 				};
 				var notification = new Notification('bitcointoyou', {
 					icon: 'http://icons.iconarchive.com/icons/froyoshark/enkel/512/Bitcoin-icon.png',
-					body: "BTC sold for R$ " + $( "#sell_quantity" ).text(),
+					body: "BTC sold for R$ " + $( "#sell_amount" ).text(),
 				});
 				notification.onclick = function () {
 					window.open("https://broker.bitcointoyou.com/LimitOrder/Create");
